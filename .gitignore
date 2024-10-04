@@ -1,0 +1,11 @@
+# Ignore Cargo build directory
+/target/
+
+# Ignore Cargo.lock for libraries (optional)
+# Cargo.lock
+
+# Ignore IDE/editor files
+/.idea/
+/.vscode/
+/.DS_Store
+/target
