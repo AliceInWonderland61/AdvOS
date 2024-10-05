@@ -1,0 +1,66 @@
+// Declare a constant for the freezing point of water in Farenheight (32 degrees F)
+//In rust you need to declare the bit number type (i for signed and u for unsigned)
+//Floating Point Types: f32 and f64
+//Since our function is using f64, we'll use it in our const value
+
+//const freezing_point:f64 =32.0; //i'm unsure of when we need to use this??
+
+
+
+//Implement two functions:fahrenheight_to_celsius(f: 64)->f64
+//f is the type of parameter, the arrow is used to indicate the return type of a function so in this case we are returning a type f64 
+// So this function takes a single argument 'f' which is a floating-point number of type f64 and it'll then return a value of type f64
+// yeah rust doesn't like capital letters so they'll all be lowercase from here on out 
+
+
+//fn Farenheight_to_Celsius(f: f64) -> f64{
+fn farenheight_to_celsius(f: f64) -> f64{
+//convering farenehight to celsius
+//formula: subtract 30 then divide by 2.
+
+
+//also since it's a return value we can't add a semi-colon after it like the other regular lines of code 
+    (f-30.0)/2.0
+}
+
+//Implement two functions: celsius_to_fahrenheit(c: f64) -> f64
+// so here we used c as the type of parameter; same as the previous one, we take a f64 and return an f64
+//lowercase cause Rust has a thing for uppercase and hates it...
+fn celsius_to_fahrenheit(c: f64) -> f64{
+//converting celsius to farenheight
+//Celsius to Fahrenheit, multiply by 2 then add 30.
+
+    (c*2.0)+30.0
+}
+
+fn main()
+{
+    // Declare a mutable variable with a temperature in Farenheight
+    //I'm under the assumption it can be any temperature ?
+    let f_temp: f64=35.0;
+    let c_temp: f64=35.0;
+
+    //Convert it to Celsius using your function and pring the result
+    //Just like c++ make a variable, then call it within that variable to store the answer
+    let f_to_c= farenheight_to_celsius(f_temp);
+    //print result
+    println!("The converson from Farenheight {}F to Celsius is {}C", f_temp, f_to_c);
+    
+
+    let c_to_f= celsius_to_fahrenheit(c_temp);
+    println!("ignore this {}", c_to_f);
+
+    //Use a loop to convert and print the 5 integer temperatures (if you start with 32f, print conversions for 33f, 34f, 35f, 36f and 37f)
+    let count=0;
+    let current_temp=32;
+    loop{
+        
+        count+=1;
+
+        println!("The {} interger temperature is: {}", count,f_to_c+count );
+        if(count==5.0){
+            break;
+        }
+    }
+    
+}
