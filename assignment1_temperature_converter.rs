@@ -3,7 +3,7 @@
 //Floating Point Types: f32 and f64
 //Since our function is using f64, we'll use it in our const value
 
-//const FREEZING_POINT:f64=32.0;
+const FREEZING_POINT:f64=32.0;
 
 
 //Implement two functions:
@@ -19,21 +19,21 @@
 fn fahrenheit_to_celsius(f: f64) -> f64{
     //convering farenehight to celsius
     //formula: subtract 30 then divide by 2.
-    (f-30.0)/2.0
+    (f-32.0)*(5.0/9.0)
 }
 
 //Implement two functions: celsius_to_fahrenheit(c: f64) -> f64: Converts Celsius to Fahrenheit
 // so here we used c as the type of parameter; same as the previous one, we take a f64 and return an f64
 //lowercase cause Rust has a thing for uppercase and hates it...
 //Comment this out since it won't let me run it cause I haven't used it
-/*
+
 fn celsius_to_fahrenheit(c: f64) -> f64{
 //also since it's a return value we can't add a semi-colon after it like the other regular lines of code 
 //converting celsius to farenheight
 //Celsius to Fahrenheit, multiply by 2 then add 30.
-    (c*2.0)+30.0
+    (c*(9.0/5.0))+32.0
 }
-*/
+
 
 //In the main function:
 fn main()
@@ -49,7 +49,7 @@ fn main()
 
     //print the result
    // the \u{00B0}F is to print out the degree symbol cause my keyboard doesn't have it lol
-    println!("{}\u{00B0}F farenheit to celsius is: {}\u{00B0}C", f_temp,f_to_c);
+    println!("{}\u{00B0}F farenheit to celsius is: {:.2}\u{00B0}C", f_temp,f_to_c);
 
 
     // Use a loop to convert and print the next 5 integer temperatures
@@ -69,7 +69,7 @@ fn main()
         // if we haven't reached 5 yet we go ahead and print out the current integer conversion 
        else{
         // the \u{00B0}F is to print out the degree symbol
-        println!("Integer {}\u{00B0}F conversion: {}\u{00B0}C", new_temp,temp);
+        println!("{}\u{00B0}F conversion: {:.2}\u{00B0}C", new_temp,temp);
         //we update our counter for the next conversion 
         count+=1;
         //update our new temperature by 1 so it can be converted each time the loop occurs (32F,33F,34F,35F,36F)
