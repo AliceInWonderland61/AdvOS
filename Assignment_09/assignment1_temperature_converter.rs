@@ -18,7 +18,7 @@ const FREEZING_POINT:f64=32.0;
 
 fn fahrenheit_to_celsius(f: f64) -> f64{
     //convering farenehight to celsius
-    //formula: subtract 30 then divide by 2.
+    //formula: subtract 32 then multiply it by (5/9)
     (f-32.0)*(5.0/9.0)
 }
 
@@ -30,7 +30,7 @@ fn fahrenheit_to_celsius(f: f64) -> f64{
 fn celsius_to_fahrenheit(c: f64) -> f64{
 //also since it's a return value we can't add a semi-colon after it like the other regular lines of code 
 //converting celsius to farenheight
-//Celsius to Fahrenheit, multiply by 2 then add 30.
+//Celsius to Fahrenheit, multiply by (9/5) then add 32.
     (c*(9.0/5.0))+32.0
 }
 
