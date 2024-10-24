@@ -33,7 +33,7 @@ impl MLFQ {
     }
 
     // Exercise 1: Queue Management
-    pub fn add_process(&mut self, process: Process) {
+    pub fn add_process(&mut self, mut process: Process) {
         // TODO: Implement this function
         // Add the process to the appropriate queue based on its priority
         // Ensure the priority is within the valid range (0 to num_levels - 1)
@@ -51,9 +51,10 @@ impl MLFQ {
         // Execute the process for its time quantum or until completion
 
         //check if we have a process in the queue. In MLFQ, the new incoming process takes priority
+        //turns out I need to unwrap it before accessing it 
         if !self.queues[queue_index].is_empty(){
             //if it's not empty, then we pop the process we have in the queue so we can work on the new process
-            let mut process=self.queues[queue_index].pop();
+            let mut process=self.queues[queue_index].pop().unwrap();
 
             //updated the time quantum for the process
         let time_quantum=self.time_quanta[queue_index];
@@ -83,7 +84,7 @@ impl MLFQ {
                 self.queues[queue_index].push(process);
             }
 
-        else{
+        }else{
             //if the process has finished, then we don't need to do anything else except update the times
             //we update the curretn time of the system to the remaining time of the process 
             self.current_time+=process.remaining_time;
@@ -93,7 +94,7 @@ impl MLFQ {
             process.remaining_time=0;
         }    
         }
-    }
+    
         // Update remaining_time, total_executed_time, and current_time
         // Move the process to a lower priority queue if it doesn't complete
     }
@@ -110,13 +111,13 @@ impl MLFQ {
             //while the queue is not empty, we pop the processes and move them to the new vector 
             while !self.queues[queue_index].is_empty(){
                 //pop the processes from the queue
-                let process=self.queues[queue_index].pop();
+                let process=self.queues[queue_index].pop().unwrap();
                 //push that process into the new vector 
                 move_all_processses.push(process);
             }
         }
         // Reset the priority of all processes to 0
-        for process in move_all_processses{
+        for mut process in move_all_processses{
             //reset the priority of the process to 0
             process.priority=0;
             //push the process into the highest prioirity queue which is index 0
