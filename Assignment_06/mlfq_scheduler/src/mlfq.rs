@@ -53,9 +53,47 @@ impl MLFQ {
         //check if we have a process in the queue. In MLFQ, the new incoming process takes priority
         if !self.queues[queue_index].is_empty(){
             //if it's not empty, then we pop the process we have in the queue so we can work on the new process
-            
+            let mut process=self.queues[queue_index].pop();
+
+            //updated the time quantum for the process
+        let time_quantum=self.time_quanta[queue_index];
+
+        //We execute the process for the allowed time or until it's completed, whichever comes first
+        //process remaining time refers to the remaining time of the process
+        //time quantum is the time limit for the process in the current queue
+
+        if process.remaining_time>time_quantum{
+            // we update the reamianing time of the process 
+            process.remaining_time-=time_quantum;
+            // we update the total executed time of the process
+            process.total_executed_time+=time_quantum;
+            //we push the process back into the same queue since we haven't finished running it yet
+            //cannnot push yet 
+           // self.queues[queue_index].push(process);
+            // updte the current time of the system, basically how much time has passsed since the process started
+            self.current_time+=time_quantum;
+
+            //if the procwess has not finished yet, we need to check to see if we can move it to a lower priroirty queue
+            if queue_index<self.num_levels-1{
+                process.priority+=1; //move the process to the next queue
+                self.queues[process.priority].push(process); //now we push the process into the next queue which has a lower priority
+            }
+            else{
+                //if we already have it in the lowest priority queue, we need to keep it there since that' thw lowest we can go
+                self.queues[queue_index].push(process);
+            }
+
+        else{
+            //if the process has finished, then we don't need to do anything else except update the times
+            //we update the curretn time of the system to the remaining time of the process 
+            self.current_time+=process.remaining_time;
+            //update the total time executed for this process
+            process.total_executed_time+=process.remaining_time;
+            //since we finished the process then the reamining time is 0
+            process.remaining_time=0;
+        }    
         }
-        
+    }
         // Update remaining_time, total_executed_time, and current_time
         // Move the process to a lower priority queue if it doesn't complete
     }
@@ -64,7 +102,26 @@ impl MLFQ {
     pub fn priority_boost(&mut self) {
         // TODO: Implement this function
         // Move all processes to the highest priority queue
+        //let's create a new vector to save the processes we'll be moving
+        let mut move_all_processses:Vec<Process>=Vec::new();
+
+        //go through all the queues and move the processes it currenlty has to the new vector 
+        for queue_index in 1..self.num_levels{
+            //while the queue is not empty, we pop the processes and move them to the new vector 
+            while !self.queues[queue_index].is_empty(){
+                //pop the processes from the queue
+                let process=self.queues[queue_index].pop();
+                //push that process into the new vector 
+                move_all_processses.push(process);
+            }
+        }
         // Reset the priority of all processes to 0
+        for process in move_all_processses{
+            //reset the priority of the process to 0
+            process.priority=0;
+            //push the process into the highest prioirity queue which is index 0
+            self.queues[0].push(process);
+        }
     }
 
     // Simulate time passing and trigger a boost if needed
